@@ -3,23 +3,23 @@ def h(i, x):
 
 
 def lambda_mu(i, x):
-    if i == 0:
-        alpha = 0
-    else:
-        alpha = (x[i] - x[i - 1]) / (x[i] - x[i - 2])
+    if i == len(x)-1:
+        return 1, 0
 
-    if i == len(x):
-        mu = 0
-    else:
-        mu = 1 - alpha
+    if i == 0:
+        return 0, 1
+
+    alpha = (x[i + 1] - x[i]) / (x[i + 1] - x[i - 1])
+
+    mu = 1 - alpha
 
     return alpha, mu
 
 
 def d(n, y, x):
-    if n == 0 or n == len(x):
+    if n == 0 or n == len(x)-1:
         return 0
-    return 6 / h(n, x) * (y[n] - (y[n] - y[n - 1]) / h(n, x))
+    return 6 / (h(n, x)+h(n+1, x)) * ((y[n+1] - y[n]) / h(n+1, x) - (y[n] - y[n-1])/h(n,x))
 
 
 def calculate_interpolated_value(coefficients, xj, x):

@@ -11,12 +11,14 @@ def setup(x, y):
     for i in range(n - 1):
         matrix[i][i + 1] = lambda_mu(i, x)[0]
 
+    # mu s
     for i in range(1, n):
         matrix[i][i - 1] = lambda_mu(i, x)[1]
 
     d_matrix = []
     for i in range(n):
         d_matrix.append(d(i, y, x))
+
 
     M_matrix = linalg.solve(matrix, d_matrix)
 

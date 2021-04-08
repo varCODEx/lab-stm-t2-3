@@ -15,20 +15,27 @@ n = len(x)
 
 coefficients = cubic_spline_coefficients_setup.setup(x, y)
 
-ix = linspace(0, x[n-1], 50)
+ix = linspace(0, x[n-1], 100000)
 iy = []
 for x_ in ix:
     iy.append(calculate_interpolated_value_with_x(coefficients, x, x_))
+    if x_ == 1.5:
+        print(calculate_interpolated_value_with_x(coefficients, x, x_))
 
-y_stlib_interpolated = interpolate.splev(ix, interpolate.splrep(x, y, s=0), der=0)
 
 for i in range(n):
     ax.scatter(x[i], y[i], c = "red", s = 15)
+
+y_stlib_interpolated = interpolate.splev(ix, interpolate.splrep(x, y, s=0), der=0)
 
 ax.plot(ix, iy, zorder=0)
 ax.plot(ix, y_stlib_interpolated, zorder=0)
 ax.legend(["interpolation", "lib interpolation", "nodes"])
 plt.show()
 
-print(calculate_interpolated_value_with_x(coefficients, x, 8))
+
+x_ = 1
+print(f"f({x_}) is ~= ", calculate_interpolated_value_with_x(coefficients, x, x_))
+
+print(coefficients)
 
